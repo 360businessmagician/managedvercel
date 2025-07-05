@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  title: Unified Communication Platform Provisioning API
+  version: v1
+  description: API for provisioning new unified communication platform instances.
+
+paths:
+  /api/provision/unified-platform:
+    post:
+      summary: Provision a new unified communication platform instance
+      description: Allows mbtq.dev to trigger the deployment and configuration of a new unified communication platform instance.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvisionRequest'
+      responses:
+        '200':
+          description: Platform provisioning initiated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Unified platform provisioning initiated. Check status for updates."
+                  instance_id:
+                    type: string
+                    description: Unique ID for the provisioned instance
+        '400':
+          description: Invalid request parameters
+        '500':
+          description: Internal server error during provisioning
+
+components:
+  schemas:
+    ProvisionRequest:
+      type: object
+      required:
+        - organization_name
+        - admin_email
+      properties:
+        organization_name:
+          type: string
+          description: Name of the organization for the new platform instance
+          example: "Deaf Community Center NYC"
+        admin_email:
+          type: string
+          format: email
+          description: Email of the primary administrator for the new instance
+          example: "admin@deafcommunity.org"
+        features:
+          type: array
+          items:
+            type: string
+            enum: [sign_language_translation, deaf_llm, visual_assistant, advanced_analytics]
+          description: List of optional features to enable for the platform
+          example: ["sign_language_translation", "deaf_llm"]
+        region:
+          type: string
+          description: Deployment region for the platform (e.g., us-east-1)
+          default: "us-east-1"

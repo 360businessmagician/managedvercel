@@ -1,7 +1,7 @@
-export default function Home() {
-  return (
-    <main>
-      <div>Next.js on Google Cloud Run</div>
-    </main>
-  );
+"use client"
+
+import TechnicalArchitecture from "technical-architecture"
+
+export default function SyntheticV0PageForDeployment() {
+  return <TechnicalArchitecture />
 }
